@@ -5,12 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--
-        PrimeBuild Construction - Single Page Website
-        Author: Your Name
-        Tech: HTML5, Tailwind CSS, Font Awesome
-    -->
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>PrimeBuild Construction | Building Your Future</title>
@@ -18,23 +12,35 @@
 
 <body class="bg-slate-50 overflow-x-hidden antialiased">
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">PrimeBuild</h1>
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex gap-6 lg:gap-8 text-sm lg:text-base">
-                <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
-                <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
-                <a href="#services" class="hover:text-blue-600 font-semibold transition">Services</a>
-                <a href="#projects" class="hover:text-blue-600 font-semibold transition">Projects</a>
-                <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
-            </div>
+<nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">PrimeBuild</h1>
+
+        <div class="hidden md:flex gap-6 lg:gap-8 text-sm lg:text-base">
+            <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
+            <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
+            <a href="#services" class="hover:text-blue-600 font-semibold transition">Services</a>
+            <a href="#projects" class="hover:text-blue-600 font-semibold transition">Projects</a>
+            <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
+        <button id="menu-btn" class="md:hidden text-slate-700 focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
+        <div class="px-4 py-4 flex flex-col gap-4 text-base">
+            <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
+            <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
+            <a href="#services" class="hover:text-blue-600 font-semibold transition">Services</a>
+            <a href="#projects" class="hover:text-blue-600 font-semibold transition">Projects</a>
+            <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
+        </div>
+    </div>
+</nav>
+
     <section class="bg-gradient-to-r from-blue-700 to-slate-800 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-24">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -62,7 +68,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -75,7 +80,7 @@
                     <p class="mt-4 sm:mt-6 text-slate-600 leading-7 text-sm sm:text-base">
                         PrimeBuild Construction is a trusted construction company dedicated to delivering quality residential, commercial and industrial projects. We focus on excellent craftsmanship, timely delivery and customer satisfaction.
                     </p>
-                    <!-- Stats -->
+    
                     <div class="grid grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-10">
                         <div class="bg-slate-100 rounded-2xl p-4 sm:p-6 text-center">
                             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-700">150+</h3>
@@ -91,7 +96,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+
     <section id="services" class="py-12 sm:py-16 lg:py-20 bg-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center">
@@ -124,7 +129,7 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
+
     <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center">
@@ -157,7 +162,7 @@
         </div>
     </section>
 
-    <!-- Why Choose Us -->
+
     <section class="py-12 sm:py-16 lg:py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center">
@@ -184,7 +189,6 @@
         </div>
     </section>
 
-    <!-- CTA -->
     <section class="py-12 sm:py-16 lg:py-20 bg-blue-600 text-white">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Ready To Start Your Construction Project?</h2>
@@ -195,7 +199,6 @@
         </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6">
             <div class="text-center">
@@ -213,18 +216,17 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-slate-900 text-white pt-12 sm:pt-16 pb-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-10">
-                <!-- Column 1 -->
+
                 <div>
                     <h3 class="text-xl sm:text-2xl font-bold mb-4">PrimeBuild</h3>
                     <p class="text-slate-400 text-sm leading-6">
                         Building quality residential, commercial and industrial projects with integrity and excellence since 2015.
                     </p>
                 </div>
-                <!-- Column 2 -->
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-slate-400 text-sm">
@@ -234,7 +236,7 @@
                         <li><a href="#projects" class="hover:text-white transition">Projects</a></li>
                     </ul>
                 </div>
-                <!-- Column 3 -->
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Services</h4>
                     <ul class="space-y-2 text-slate-400 text-sm">
@@ -244,22 +246,36 @@
                         <li>Architecture Design</li>
                     </ul>
                 </div>
-                <!-- Column 4 -->
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Contact</h4>
                     <ul class="space-y-2 text-slate-400 text-sm">
-                        <li><i class="fas fa-phone mr-2"></i> +234 800 000 0000</li>
-                        <li><i class="fas fa-envelope mr-2"></i> info@primebuild.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>❤️❤️❤️❤️</li>
+                        <li><i class="fas fa-envelope mr-2"></i> ❤️❤️❤️❤️</li>
                         <li><i class="fas fa-location-dot mr-2"></i> Lagos, Nigeria</li>
                     </ul>
                 </div>
             </div>
-            <!-- Bottom Bar -->
+
             <div class="border-t border-slate-800 pt-6 text-center text-slate-500 text-xs sm:text-sm">
                 © 2026 PrimeBuild Construction. All Rights Reserved. | Built with ❤️
             </div>
         </div>
     </footer>
 
+    <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+</script>
 </body>
 </html>
