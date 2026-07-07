@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+        PrimeBuild Construction - Single Page Website
+        Author: Your Name
+        Tech: HTML5, Tailwind CSS, Font Awesome
+    -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>PrimeBuild Construction | Building Your Future</title>
+</head>
+
+<body class="bg-slate-50 overflow-x-hidden antialiased">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">PrimeBuild</h1>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex gap-6 lg:gap-8 text-sm lg:text-base">
+                <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
+                <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
+                <a href="#services" class="hover:text-blue-600 font-semibold transition">Services</a>
+                <a href="#projects" class="hover:text-blue-600 font-semibold transition">Projects</a>
+                <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-700 to-slate-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div class="text-center lg:text-left">
+                    <p class="uppercase tracking-[3px] text-xs sm:text-sm text-blue-200">Welcome To PrimeBuild</p>
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mt-4 sm:mt-6 leading-tight">
+                        Building Your Future With Quality Construction
+                    </h1>
+                    <p class="mt-4 sm:mt-6 text-blue-100 leading-6 sm:leading-7 text-sm sm:text-base lg:text-lg max-w-xl mx-auto lg:mx-0">
+                        PrimeBuild delivers residential, commercial and industrial construction projects with modern techniques and outstanding service.
+                    </p>
+                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+                        <a href="#contact" class="bg-white text-blue-700 px-6 py-3 rounded-xl font-bold text-sm sm:text-base hover:bg-slate-100 transition">
+                            Get A Quote
+                        </a>
+                        <a href="#projects" class="border-2 border-white px-6 py-3 rounded-xl text-sm sm:text-base font-semibold hover:bg-white hover:text-blue-700 transition">
+                            Our Projects
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200" alt="Construction site" class="rounded-3xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200" alt="About PrimeBuild" class="rounded-2xl lg:rounded-3xl shadow-xl w-full">
+                </div>
+                <div>
+                    <p class="uppercase tracking-[3px] text-blue-600 font-semibold text-xs sm:text-sm">About Us</p>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-3">Building Excellence Since 2015</h2>
+                    <p class="mt-4 sm:mt-6 text-slate-600 leading-7 text-sm sm:text-base">
+                        PrimeBuild Construction is a trusted construction company dedicated to delivering quality residential, commercial and industrial projects. We focus on excellent craftsmanship, timely delivery and customer satisfaction.
+                    </p>
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-10">
+                        <div class="bg-slate-100 rounded-2xl p-4 sm:p-6 text-center">
+                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-700">150+</h3>
+                            <p class="mt-1 text-slate-600 text-xs sm:text-sm">Projects Completed</p>
+                        </div>
+                        <div class="bg-slate-100 rounded-2xl p-4 sm:p-6 text-center">
+                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-700">10+</h3>
+                            <p class="mt-1 text-slate-600 text-xs sm:text-sm">Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-12 sm:py-16 lg:py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center">
+                <p class="uppercase tracking-[3px] text-blue-600 font-semibold text-xs sm:text-sm">Our Services</p>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-3">What We Offer</h2>
+                <p class="mt-4 text-slate-500 max-w-2xl mx-auto text-sm sm:text-base">We provide complete construction solutions from planning to finishing.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 mt-10 sm:mt-16">
+                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
+                    <div class="text-3xl sm:text-4xl">🏠</div>
+                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Residential</h3>
+                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Beautiful family homes built with quality materials.</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
+                    <div class="text-3xl sm:text-4xl">🏢</div>
+                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Commercial</h3>
+                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Modern office buildings and business complexes.</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
+                    <div class="text-3xl sm:text-4xl">🛠️</div>
+                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Renovation</h3>
+                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Transform old buildings into modern masterpieces.</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
+                    <div class="text-3xl sm:text-4xl">📐</div>
+                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Architecture</h3>
+                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Creative designs tailored to your vision.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center">
+                <p class="uppercase tracking-[3px] text-blue-600 font-semibold text-xs sm:text-sm">Our Projects</p>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-3">Featured Construction Projects</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-16">
+                <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900" alt="Corporate Office" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">Corporate Office</h3>
+                        <p class="mt-2 text-slate-500 text-xs sm:text-sm">Modern office complex built for growing businesses.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition">
+                    <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?w=900" alt="Luxury Villa" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">Luxury Villa</h3>
+                        <p class="mt-2 text-slate-500 text-xs sm:text-sm">Elegant residential home with premium finishing.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition">
+                    <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=900" alt="Shopping Mall" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">Shopping Mall</h3>
+                        <p class="mt-2 text-slate-500 text-xs sm:text-sm">Large commercial project completed on schedule.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center">
+                <p class="text-blue-600 uppercase tracking-[3px] font-semibold text-xs sm:text-sm">Why Choose Us</p>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mt-3">Quality, Trust, and Timely Delivery</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-5 sm:gap-8 mt-10 sm:mt-16">
+                <div class="bg-white p-5 sm:p-8 rounded-2xl shadow hover:shadow-lg transition">
+                    <i class="fas fa-hard-hat text-2xl sm:text-3xl lg:text-4xl text-blue-600"></i>
+                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold mt-3 sm:mt-5">Expert Team</h3>
+                    <p class="text-slate-500 mt-2 sm:mt-3 text-xs sm:text-sm">Skilled engineers and craftsmen with years of experience.</p>
+                </div>
+                <div class="bg-white p-5 sm:p-8 rounded-2xl shadow hover:shadow-lg transition">
+                    <i class="fas fa-clock text-2xl sm:text-3xl lg:text-4xl text-blue-600"></i>
+                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold mt-3 sm:mt-5">On-Time Delivery</h3>
+                    <p class="text-slate-500 mt-2 sm:mt-3 text-xs sm:text-sm">We respect deadlines and deliver projects on schedule.</p>
+                </div>
+                <div class="bg-white p-5 sm:p-8 rounded-2xl shadow hover:shadow-lg transition">
+                    <i class="fas fa-shield-halved text-2xl sm:text-3xl lg:text-4xl text-blue-600"></i>
+                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold mt-3 sm:mt-5">Quality Materials</h3>
+                    <p class="text-slate-500 mt-2 sm:mt-3 text-xs sm:text-sm">We use only the best materials for lasting construction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-blue-600 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Ready To Start Your Construction Project?</h2>
+            <p class="mt-4 sm:mt-6 text-blue-100 text-sm sm:text-base lg:text-lg">Let's build something strong, beautiful and lasting together.</p>
+            <a href="#contact" class="inline-block mt-6 sm:mt-8 bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-slate-100 transition">
+                Get A Free Quote
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Contact Us</h2>
+                <p class="text-slate-500 mt-3 text-sm sm:text-base">Tell us about your project.</p>
+            </div>
+            <form class="mt-8 sm:mt-12 space-y-4 sm:space-y-6">
+                <input type="text" placeholder="Your Name" class="w-full border-slate-200 p-3 sm:p-4 rounded-xl outline-none focus:border-blue-600 text-sm sm:text-base">
+                <input type="email" placeholder="Email Address" class="w-full border-slate-200 p-3 sm:p-4 rounded-xl outline-none focus:border-blue-600 text-sm sm:text-base">
+                <textarea rows="5" placeholder="Your Message" class="w-full border border-slate-200 p-3 sm:p-4 rounded-xl outline-none focus:border-blue-600 text-sm sm:text-base"></textarea>
+                <button class="bg-blue-600 text-white px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-blue-700 transition w-full sm:w-auto">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white pt-12 sm:pt-16 pb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-10">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-4">PrimeBuild</h3>
+                    <p class="text-slate-400 text-sm leading-6">
+                        Building quality residential, commercial and industrial projects with integrity and excellence since 2015.
+                    </p>
+                </div>
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#about" class="hover:text-white transition">About</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Services</a></li>
+                        <li><a href="#projects" class="hover:text-white transition">Projects</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li>Residential Construction</li>
+                        <li>Commercial Buildings</li>
+                        <li>Renovation</li>
+                        <li>Architecture Design</li>
+                    </ul>
+                </div>
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><i class="fas fa-phone mr-2"></i> +234 800 000 0000</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@primebuild.com</li>
+                        <li><i class="fas fa-location-dot mr-2"></i> Lagos, Nigeria</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Bottom Bar -->
+            <div class="border-t border-slate-800 pt-6 text-center text-slate-500 text-xs sm:text-sm">
+                © 2026 PrimeBuild Construction. All Rights Reserved. | Built with ❤️
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
