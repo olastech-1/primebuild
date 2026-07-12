@@ -17,6 +17,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
         <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">PrimeBuild</h1>
 
+        <!-- Desktop Menu -->
         <div class="hidden md:flex gap-6 lg:gap-8 text-sm lg:text-base">
             <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
             <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
@@ -25,18 +26,35 @@
             <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
         </div>
 
-        <button id="menu-btn" class="md:hidden text-slate-700 focus:outline-none">
-            <i class="fas fa-bars text-2xl"></i>
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="md:hidden text-slate-700 focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition">
+            <i id="menu-icon" class="fas fa-bars text-2xl"></i>
         </button>
     </div>
 
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
-        <div class="px-4 py-4 flex flex-col gap-4 text-base">
-            <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
-            <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
-            <a href="#services" class="hover:text-blue-600 font-semibold transition">Services</a>
-            <a href="#projects" class="hover:text-blue-600 font-semibold transition">Projects</a>
-            <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200 shadow-lg">
+        <div class="px-2 py-3 flex-col">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
+                <i class="fas fa-home w-5 text-center"></i>
+                <span>Home</span>
+            </a>
+            <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
+                <i class="fas fa-building w-5 text-center"></i>
+                <span>About</span>
+            </a>
+            <a href="#services" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
+                <i class="fas fa-tools w-5 text-center"></i>
+                <span>Services</span>
+            </a>
+            <a href="#projects" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
+                <i class="fas fa-briefcase w-5 text-center"></i>
+                <span>Projects</span>
+            </a>
+            <a href="#contact" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
+                <i class="fas fa-phone w-5 text-center"></i>
+                <span>Contact</span>
+            </a>
         </div>
     </div>
 </nav>
@@ -264,18 +282,24 @@
     </footer>
 
     <script>
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
 
-    menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('fa-bars');
+            menuIcon.classList.toggle('fa-times');
         });
-    });
-</script>
+
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.add('fa-bars');
+                menuIcon.classList.remove('fa-times');
+            });
+        });
+    </script>
 </body>
 </html>
