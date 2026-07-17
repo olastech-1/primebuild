@@ -1,305 +1,1201 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrimeBuild Construction — Lagos | From Blueprint to Built</title>
+<meta name="description" content="PrimeBuild delivers residential, commercial and industrial construction across Lagos.">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <title>PrimeBuild Construction | Building Your Future</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+  :root {
+    --color-ink: #14171C;        --color-ink-soft: #3A4048;   --color-concrete: #EFEBE3;   --color-concrete-2: #E4DFD3; --color-surface: #FFFFFF;    --color-steel: #3E4C63;      --color-steel-2: #6B7A94;    --color-amber: #E8A33D;      --color-amber-2: #F5C978;    --color-border: rgba(20,23,28,0.10);
+
+    --bg: var(--color-concrete);
+    --bg-surface: var(--color-surface);
+    --text: var(--color-ink);
+    --text-soft: var(--color-ink-soft);
+  }
+
+  html.dark {
+    --bg: #0F1216;
+    --bg-surface: #171B21;
+    --text: #F2EFE9;
+    --text-soft: #A9AFB9;
+    --color-border: rgba(242,239,233,0.10);
+    --color-concrete-2: #1E2329;
+  }
+
+  html {
+    scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+  }
+
+  .blueprint-grid {
+    background-image:
+      linear-gradient(rgba(20,23,28,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20,23,28,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .blueprint-grid-dark {
+    background-image:
+      linear-gradient(rgba(242,239,233,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,239,233,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .glow-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .btn:hover {
+    transform: translateY(-3px);
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-concrete);
+  }
+  html.dark .btn-primary {
+    background: var(--color-amber);
+    color: var(--color-ink);
+  }
+  .btn-amber {
+    background: var(--color-amber);
+    color: var(--color-ink);
+  }
+  .btn-amber:hover {
+    box-shadow: 0 12px 32px rgba(232,163,61,0.35);
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--color-border);
+    color: var(--text);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-amber);
+  }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transform: scale(0);
+    animation: rippleGrow 0.6s linear;
+    pointer-events: none;
+  }
+  @keyframes rippleGrow {
+    to { transform: scale(3); opacity: 0; }
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-scale.in-view {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 64px rgba(20,23,28,0.14);
+  }
+
+  .zoom-wrap {
+    overflow: hidden;
+    border-radius: inherit;
+  }
+  .zoom-img {
+    transition: transform 0.7s ease;
+  }
+  .zoom-wrap:hover .zoom-img {
+    transform: scale(1.08);
+  }
+
+  .float-animation {
+    animation: floatUpDown 6s ease-in-out infinite;
+  }
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-16px); }
+  }
+
+  .gradient-animated {
+    background: linear-gradient(120deg, var(--color-ink) 0%, #26313F 35%, var(--color-steel) 60%, var(--color-ink) 100%);
+    background-size: 300% 300%;
+    animation: gradientMove 14s ease infinite;
+  }
+  @keyframes gradientMove {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: var(--color-amber);
+    transition: width 0.3s ease;
+  }
+  .nav-link.active-link::after,
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .draw-line {
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: drawLine 2.5s ease forwards;
+  }
+  @keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+  }
+  .rise-fill {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    animation: riseUp 1s ease forwards;
+    animation-delay: 2.2s;
+  }
+  @keyframes riseUp {
+    to { transform: scaleY(1); }
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    width: max-content;
+    animation: marqueeScroll 28s linear infinite;
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .timeline-track {
+    position: relative;
+    background: var(--color-border);
+    overflow: hidden;
+  }
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 0%;
+    background: var(--color-amber);
+    transition: height 1.2s ease;
+  }
+  .timeline-track.in-view::before {
+    height: 100%;
+  }
+
+  details.faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  details.faq-item summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  details.faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  details.faq-item .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  details.faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  details.faq-item .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+  details.faq-item[open] .faq-answer {
+    max-height: 300px;
+    opacity: 1;
+  }
+
+  #page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  #page-loader.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .loader-bar-track {
+    width: 120px;
+    height: 2px;
+    background: rgba(242,239,233,0.15);
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .loader-bar-fill {
+    display: block;
+    height: 100%;
+    width: 40%;
+    background: var(--color-amber);
+    animation: loaderMove 1.1s ease-in-out infinite;
+  }
+  @keyframes loaderMove {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(350%); }
+  }
+
+  .filter-btn {
+    border: 1px solid var(--color-border);
+    color: var(--text-soft);
+    transition: all 0.3s ease;
+  }
+  .filter-btn.filter-active {
+    background: var(--color-ink);
+    color: var(--color-concrete);
+    border-color: var(--color-ink);
+  }
+  html.dark .filter-btn.filter-active {
+    background: var(--color-amber);
+    color: var(--color-ink);
+    border-color: var(--color-amber);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--color-amber);
+    color: var(--color-ink);
+    padding: 0.75rem 1.25rem;
+    z-index: 10000;
+    font-weight: 600;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+</style>
 </head>
 
-<body class="bg-slate-50 overflow-x-hidden antialiased">
+<body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-<nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">PrimeBuild</h1>
+<div id="page-loader">
+  <div class="text-center">
+    <p class="font-display text-2xl text-white mb-4">PRIMEBUILD</p>
+    <div class="loader-bar-track mx-auto">
+      <span class="loader-bar-fill"></span>
+    </div>
+  </div>
+</div>
 
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex gap-6 lg:gap-8 text-sm lg:text-base">
-            <a href="#" class="hover:text-blue-600 font-semibold transition">Home</a>
-            <a href="#about" class="hover:text-blue-600 font-semibold transition">About</a>
-            <a href="#services" class="hover:text-blue-600 font-semibold transition">Services</a>
-            <a href="#projects" class="hover:text-blue-600 font-semibold transition">Projects</a>
-            <a href="#contact" class="hover:text-blue-600 font-semibold transition">Contact</a>
-        </div>
+<nav id="site-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div id="nav-inner" class="flex justify-between items-center py-5 border-b border-transparent transition-all duration-300">
 
-        <!-- Mobile Menu Button -->
-        <button id="menu-btn" class="md:hidden text-slate-700 focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition">
-            <i id="menu-icon" class="fas fa-bars text-2xl"></i>
+      <a href="#" class="font-display font-bold text-xl flex items-center gap-2">
+        <svg width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+          <rect x="2" y="16" width="6" height="12" fill="currentColor"/>
+          <rect x="12" y="9" width="6" height="19" fill="var(--color-amber)"/>
+          <rect x="22" y="2" width="6" height="26" fill="currentColor"/>
+        </svg>
+        PrimeBuild
+      </a>
+
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#process" class="nav-link">Process</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="dark-mode-btn" aria-label="Toggle dark mode" class="w-10 h-10 rounded-full border border-[--color-border] flex items-center justify-center">
+          <i class="fa-solid fa-moon text-sm" id="dark-mode-icon"></i>
         </button>
-    </div>
+        <a href="#contact" class="btn btn-amber hidden sm:inline-flex px-5 py-2.5 rounded-full font-semibold text-sm">Get A Quote</a>
+        <button id="mobile-menu-btn" class="md:hidden w-10 h-10 rounded-full border border-[--color-border] flex items-center justify-center" aria-label="Open menu" aria-expanded="false">
+          <i class="fas fa-bars text-base" id="mobile-menu-icon"></i>
+        </button>
+      </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200 shadow-lg">
-        <div class="px-2 py-3 flex-col">
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
-                <i class="fas fa-home w-5 text-center"></i>
-                <span>Home</span>
-            </a>
-            <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
-                <i class="fas fa-building w-5 text-center"></i>
-                <span>About</span>
-            </a>
-            <a href="#services" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
-                <i class="fas fa-tools w-5 text-center"></i>
-                <span>Services</span>
-            </a>
-            <a href="#projects" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
-                <i class="fas fa-briefcase w-5 text-center"></i>
-                <span>Projects</span>
-            </a>
-            <a href="#contact" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 font-semibold transition text-slate-700">
-                <i class="fas fa-phone w-5 text-center"></i>
-                <span>Contact</span>
-            </a>
-        </div>
     </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden mx-4 mb-4 rounded-2xl border border-[--color-border] shadow-lg" style="background:var(--bg-surface);">
+    <div class="px-2 py-3 flex flex-col">
+      <a href="#about" class="mobile-link px-4 py-3 rounded-xl font-medium">About</a>
+      <a href="#services" class="mobile-link px-4 py-3 rounded-xl font-medium">Services</a>
+      <a href="#process" class="mobile-link px-4 py-3 rounded-xl font-medium">Process</a>
+      <a href="#projects" class="mobile-link px-4 py-3 rounded-xl font-medium">Projects</a>
+      <a href="#faq" class="mobile-link px-4 py-3 rounded-xl font-medium">FAQ</a>
+      <a href="#contact" class="mobile-link px-4 py-3 rounded-xl font-semibold">Get A Quote</a>
+    </div>
+  </div>
 </nav>
 
-    <section class="bg-gradient-to-r from-blue-700 to-slate-800 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-24">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                <div class="text-center lg:text-left">
-                    <p class="uppercase tracking-[3px] text-xs sm:text-sm text-blue-200">Welcome To PrimeBuild</p>
-                    <h1 class="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mt-4 sm:mt-6 leading-tight">
-                        Building Your Future With Quality Construction
-                    </h1>
-                    <p class="mt-4 sm:mt-6 text-blue-100 leading-6 sm:leading-7 text-sm sm:text-base lg:text-lg max-w-xl mx-auto lg:mx-0">
-                        PrimeBuild delivers residential, commercial and industrial construction projects with modern techniques and outstanding service.
-                    </p>
-                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                        <a href="#contact" class="bg-white text-blue-700 px-6 py-3 rounded-xl font-bold text-sm sm:text-base hover:bg-slate-100 transition">
-                            Get A Quote
-                        </a>
-                        <a href="#projects" class="border-2 border-white px-6 py-3 rounded-xl text-sm sm:text-base font-semibold hover:bg-white hover:text-blue-700 transition">
-                            Our Projects
-                        </a>
-                    </div>
-                </div>
-                <div class="hidden lg:block">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200" alt="Construction site" class="rounded-3xl shadow-2xl">
-                </div>
-            </div>
+<main id="main-content">
+
+<section class="relative overflow-hidden gradient-animated text-white pt-32 pb-24 sm:pt-40 sm:pb-32">
+
+  <div class="absolute inset-0 blueprint-grid-dark opacity-60"></div>
+  <div class="glow-blob w-96 h-96 bg-amber-400/20 top-10 -left-32"></div>
+  <div class="glow-blob w-80 h-80 bg-slate-500/30 bottom-0 right-0"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <div>
+        <p class="font-mono text-xs uppercase tracking-widest text-amber-400">— Lagos, Nigeria — Est. 2015</p>
+
+        <h1 class="font-display font-bold text-4xl sm:text-6xl mt-5 leading-tight reveal-up">
+          From Blueprint<br>to Built.
+        </h1>
+
+        <p class="mt-6 text-slate-300 text-base sm:text-lg max-w-lg reveal-up">
+          PrimeBuild plans, engineers and delivers residential, commercial and industrial projects across Lagos — precise on spec, honest on schedule.
+        </p>
+
+        <div class="mt-9 flex flex-col sm:flex-row gap-4 reveal-up">
+          <a href="#contact" class="btn btn-amber px-7 py-4 rounded-full font-semibold">
+            Start Your Project <i class="fa-solid fa-arrow-right text-sm"></i>
+          </a>
+          <a href="#projects" class="btn btn-ghost px-7 py-4 rounded-full font-semibold text-white" style="border-color:rgba(255,255,255,0.25);">
+            View Our Work
+          </a>
         </div>
-    </section>
 
-    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                <div>
-                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200" alt="About PrimeBuild" class="rounded-2xl lg:rounded-3xl shadow-xl w-full">
-                </div>
-                <div>
-                    <p class="uppercase tracking-[3px] text-blue-600 font-semibold text-xs sm:text-sm">About Us</p>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-3">Building Excellence Since 2015</h2>
-                    <p class="mt-4 sm:mt-6 text-slate-600 leading-7 text-sm sm:text-base">
-                        PrimeBuild Construction is a trusted construction company dedicated to delivering quality residential, commercial and industrial projects. We focus on excellent craftsmanship, timely delivery and customer satisfaction.
-                    </p>
-    
-                    <div class="grid grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-10">
-                        <div class="bg-slate-100 rounded-2xl p-4 sm:p-6 text-center">
-                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-700">150+</h3>
-                            <p class="mt-1 text-slate-600 text-xs sm:text-sm">Projects Completed</p>
-                        </div>
-                        <div class="bg-slate-100 rounded-2xl p-4 sm:p-6 text-center">
-                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-700">10+</h3>
-                            <p class="mt-1 text-slate-600 text-xs sm:text-sm">Years Experience</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-12 flex gap-8 reveal-up">
+          <div>
+            <div class="font-display font-bold text-3xl js-counter" data-target="150" data-suffix="+">0</div>
+            <p class="text-xs font-mono text-slate-400 mt-1 uppercase">Projects Built</p>
+          </div>
+          <div>
+            <div class="font-display font-bold text-3xl js-counter" data-target="10" data-suffix="+">0</div>
+            <p class="text-xs font-mono text-slate-400 mt-1 uppercase">Years Active</p>
+          </div>
+          <div>
+            <div class="font-display font-bold text-3xl js-counter" data-target="98" data-suffix="%">0</div>
+            <p class="text-xs font-mono text-slate-400 mt-1 uppercase">On-Time Rate</p>
+          </div>
         </div>
-    </section>
+      </div>
 
+      <div class="relative hidden lg:block reveal-scale" aria-hidden="true">
+        <svg viewBox="0 0 420 380" class="w-full h-auto">
+          <g fill="none" stroke="var(--color-amber)" stroke-width="2.5" stroke-linejoin="round" class="draw-line">
+            <path d="M60,330 L60,180 L150,120 L150,330 M150,180 L260,180 M60,180 L150,120 L260,180 L260,330 M260,150 L340,150 L340,330 M260,180 L340,150"/>
+            <rect x="85" y="220" width="30" height="40"/>
+            <rect x="190" y="220" width="30" height="40"/>
+            <rect x="285" y="200" width="30" height="40"/>
+            <rect x="285" y="260" width="30" height="40"/>
+          </g>
+          <g class="rise-fill">
+            <rect x="60" y="180" width="90" height="150" fill="var(--color-steel-2)" opacity="0.35"/>
+            <polygon points="60,180 150,120 150,180" fill="var(--color-steel-2)" opacity="0.5"/>
+            <rect x="150" y="180" width="110" height="150" fill="white" opacity="0.12"/>
+            <rect x="260" y="150" width="80" height="180" fill="var(--color-amber)" opacity="0.85"/>
+            <polygon points="260,150 340,150 340,180 260,180" fill="var(--color-amber-2)" opacity="0.9"/>
+          </g>
+        </svg>
 
-    <section id="services" class="py-12 sm:py-16 lg:py-20 bg-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center">
-                <p class="uppercase tracking-[3px] text-blue-600 font-semibold text-xs sm:text-sm">Our Services</p>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-3">What We Offer</h2>
-                <p class="mt-4 text-slate-500 max-w-2xl mx-auto text-sm sm:text-base">We provide complete construction solutions from planning to finishing.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 mt-10 sm:mt-16">
-                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
-                    <div class="text-3xl sm:text-4xl">🏠</div>
-                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Residential</h3>
-                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Beautiful family homes built with quality materials.</p>
-                </div>
-                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
-                    <div class="text-3xl sm:text-4xl">🏢</div>
-                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Commercial</h3>
-                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Modern office buildings and business complexes.</p>
-                </div>
-                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
-                    <div class="text-3xl sm:text-4xl">🛠️</div>
-                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Renovation</h3>
-                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Transform old buildings into modern masterpieces.</p>
-                </div>
-                <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8 text-center hover:-translate-y-1 transition">
-                    <div class="text-3xl sm:text-4xl">📐</div>
-                    <h3 class="mt-4 text-lg sm:text-xl lg:text-2xl font-bold">Architecture</h3>
-                    <p class="mt-3 text-slate-500 text-xs sm:text-sm">Creative designs tailored to your vision.</p>
-                </div>
-            </div>
+        <div class="absolute -bottom-4 -left-4 float-animation px-4 py-3 rounded-2xl border" style="background:var(--bg-surface); border-color:var(--color-border);">
+          <p class="font-mono text-[10px] uppercase" style="color:var(--color-steel-2)">Status</p>
+          <p class="font-display font-semibold text-sm" style="color:var(--color-ink)">
+            <i class="fa-solid fa-circle-check text-amber-500 mr-1"></i> Structurally Sound
+          </p>
         </div>
-    </section>
+      </div>
 
+    </div>
+  </div>
+</section>
 
-    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center">
-                <p class="uppercase tracking-[3px] text-blue-600 font-semibold text-xs sm:text-sm">Our Projects</p>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-3">Featured Construction Projects</h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-16">
-                <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900" alt="Corporate Office" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
-                    <div class="p-4 sm:p-6">
-                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">Corporate Office</h3>
-                        <p class="mt-2 text-slate-500 text-xs sm:text-sm">Modern office complex built for growing businesses.</p>
-                    </div>
-                </div>
-                <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition">
-                    <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?w=900" alt="Luxury Villa" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
-                    <div class="p-4 sm:p-6">
-                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">Luxury Villa</h3>
-                        <p class="mt-2 text-slate-500 text-xs sm:text-sm">Elegant residential home with premium finishing.</p>
-                    </div>
-                </div>
-                <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition">
-                    <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=900" alt="Shopping Mall" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
-                    <div class="p-4 sm:p-6">
-                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">Shopping Mall</h3>
-                        <p class="mt-2 text-slate-500 text-xs sm:text-sm">Large commercial project completed on schedule.</p>
-                    </div>
-                </div>
-            </div>
+<section class="py-10 border-b overflow-hidden" style="border-color:var(--color-border); background:var(--bg-surface);">
+  <div class="marquee-track items-center opacity-70">
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-shield-halved"></i> COREN Certified</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-award"></i> ISO 9001:2015</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-hard-hat"></i> NIOB Registered</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-leaf"></i> Green Building Council</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-city"></i> Lagos State Approved</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-shield-halved"></i> COREN Certified</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-award"></i> ISO 9001:2015</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-hard-hat"></i> NIOB Registered</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-leaf"></i> Green Building Council</span>
+    <span class="font-mono text-sm uppercase flex items-center gap-3"><i class="fa-solid fa-city"></i> Lagos State Approved</span>
+  </div>
+</section>
+
+<section id="about" class="py-20 sm:py-28" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <div class="reveal-left relative">
+        <div class="rounded-2xl overflow-hidden zoom-wrap shadow-xl">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1000&auto=format&fit=crop&q=70" loading="lazy" alt="PrimeBuild engineers reviewing plans on site" class="zoom-img w-full h-96 object-cover">
         </div>
-    </section>
-
-
-    <section class="py-12 sm:py-16 lg:py-20 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center">
-                <p class="text-blue-600 uppercase tracking-[3px] font-semibold text-xs sm:text-sm">Why Choose Us</p>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mt-3">Quality, Trust, and Timely Delivery</h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-5 sm:gap-8 mt-10 sm:mt-16">
-                <div class="bg-white p-5 sm:p-8 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-hard-hat text-2xl sm:text-3xl lg:text-4xl text-blue-600"></i>
-                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold mt-3 sm:mt-5">Expert Team</h3>
-                    <p class="text-slate-500 mt-2 sm:mt-3 text-xs sm:text-sm">Skilled engineers and craftsmen with years of experience.</p>
-                </div>
-                <div class="bg-white p-5 sm:p-8 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-clock text-2xl sm:text-3xl lg:text-4xl text-blue-600"></i>
-                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold mt-3 sm:mt-5">On-Time Delivery</h3>
-                    <p class="text-slate-500 mt-2 sm:mt-3 text-xs sm:text-sm">We respect deadlines and deliver projects on schedule.</p>
-                </div>
-                <div class="bg-white p-5 sm:p-8 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-shield-halved text-2xl sm:text-3xl lg:text-4xl text-blue-600"></i>
-                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold mt-3 sm:mt-5">Quality Materials</h3>
-                    <p class="text-slate-500 mt-2 sm:mt-3 text-xs sm:text-sm">We use only the best materials for lasting construction.</p>
-                </div>
-            </div>
+        <div class="absolute -bottom-6 -right-6 hidden sm:block rounded-2xl px-5 py-4 float-animation" style="background:var(--color-ink);">
+          <p class="font-display text-2xl font-bold text-amber-400">10+ yrs</p>
+          <p class="font-mono text-[10px] uppercase text-slate-300">On the ground in Lagos</p>
         </div>
-    </section>
+      </div>
 
-    <section class="py-12 sm:py-16 lg:py-20 bg-blue-600 text-white">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Ready To Start Your Construction Project?</h2>
-            <p class="mt-4 sm:mt-6 text-blue-100 text-sm sm:text-base lg:text-lg">Let's build something strong, beautiful and lasting together.</p>
-            <a href="#contact" class="inline-block mt-6 sm:mt-8 bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-slate-100 transition">
-                Get A Free Quote
-            </a>
+      <div class="reveal-right">
+        <p class="font-mono text-xs uppercase text-amber-500">— About PrimeBuild</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Every structure starts as a promise we intend to keep</h2>
+        <p class="mt-6 leading-relaxed" style="color:var(--text-soft)">
+          Since 2015, PrimeBuild has taken residential, commercial and industrial projects from first sketch to final handover across Lagos. We pair licensed structural engineering with disciplined site management.
+        </p>
+        <ul class="mt-8 space-y-4">
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-amber-500 mt-1"></i><span class="text-sm"><strong>Licensed engineers</strong> — COREN-certified sign-off on every build.</span></li>
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-amber-500 mt-1"></i><span class="text-sm"><strong>Fixed-scope contracts</strong> — the quote you sign is the price you pay.</span></li>
+          <li class="flex items-start gap-3"><i class="fa-solid fa-check text-amber-500 mt-1"></i><span class="text-sm"><strong>Weekly site reports</strong> — photo-logged progress, every Friday.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-20">
+      <div class="card p-6 text-center reveal-up">
+        <h3 class="font-display text-3xl font-bold js-counter" data-target="150" data-suffix="+">0</h3>
+        <p class="mt-2 font-mono text-xs uppercase" style="color:var(--color-steel-2)">Projects Completed</p>
+      </div>
+      <div class="card p-6 text-center reveal-up">
+        <h3 class="font-display text-3xl font-bold js-counter" data-target="10" data-suffix="+">0</h3>
+        <p class="mt-2 font-mono text-xs uppercase" style="color:var(--color-steel-2)">Years Experience</p>
+      </div>
+      <div class="card p-6 text-center reveal-up">
+        <h3 class="font-display text-3xl font-bold js-counter" data-target="40" data-suffix="+">0</h3>
+        <p class="mt-2 font-mono text-xs uppercase" style="color:var(--color-steel-2)">Engineers &amp; Crew</p>
+      </div>
+      <div class="card p-6 text-center reveal-up">
+        <h3 class="font-display text-3xl font-bold js-counter" data-target="98" data-suffix="%">0</h3>
+        <p class="mt-2 font-mono text-xs uppercase" style="color:var(--color-steel-2)">On-Schedule Rate</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="py-20 sm:py-28" style="background:var(--color-concrete-2);">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto reveal-up">
+      <p class="font-mono text-xs uppercase text-amber-500">— What We Build</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Complete construction solutions, one accountable team</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
+      <div class="card p-7 reveal-up">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-house text-amber-500 text-lg"></i></div>
+        <h3 class="font-display font-semibold text-xl">Residential</h3>
+        <p class="mt-3 text-sm" style="color:var(--text-soft)">Family homes and estates built with quality materials.</p>
+      </div>
+      <div class="card p-7 reveal-up">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-building text-amber-500 text-lg"></i></div>
+        <h3 class="font-display font-semibold text-xl">Commercial</h3>
+        <p class="mt-3 text-sm" style="color:var(--text-soft)">Offices, retail and mixed-use developments.</p>
+      </div>
+      <div class="card p-7 reveal-up">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-trowel text-amber-500 text-lg"></i></div>
+        <h3 class="font-display font-semibold text-xl">Renovation</h3>
+        <p class="mt-3 text-sm" style="color:var(--text-soft)">Structural upgrades and full interior transformations.</p>
+      </div>
+      <div class="card p-7 reveal-up">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-compass-drafting text-amber-500 text-lg"></i></div>
+        <h3 class="font-display font-semibold text-xl">Architecture</h3>
+        <p class="mt-3 text-sm" style="color:var(--text-soft)">In-house design and structural drawings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="py-20 sm:py-28" style="background:var(--bg);">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto reveal-up">
+      <p class="font-mono text-xs uppercase text-amber-500">— How We Work</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Four fixed stages, no surprises</h2>
+    </div>
+
+    <div class="relative mt-16">
+      <div class="timeline-track absolute left-6 sm:left-1/2 top-0 bottom-0 w-0.5 sm:-translate-x-1/2" id="js-timeline-line"></div>
+
+      <div class="space-y-14">
+        <div class="relative flex sm:justify-start reveal-left">
+          <div class="absolute left-6 sm:left-1/2 w-3 h-3 rounded-full bg-amber-500 -translate-x-1/2 mt-2"></div>
+          <div class="pl-16 sm:pl-0 sm:w-1/2 sm:pr-14 sm:text-right">
+            <span class="font-mono text-xs text-amber-500">STAGE 01</span>
+            <h3 class="font-display font-semibold text-xl mt-2">Consultation &amp; Survey</h3>
+            <p class="mt-2 text-sm" style="color:var(--text-soft)">We visit site, assess soil and access, and scope your budget.</p>
+          </div>
         </div>
-    </section>
-
-    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6">
-            <div class="text-center">
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Contact Us</h2>
-                <p class="text-slate-500 mt-3 text-sm sm:text-base">Tell us about your project.</p>
-            </div>
-            <form class="mt-8 sm:mt-12 space-y-4 sm:space-y-6">
-                <input type="text" placeholder="Your Name" class="w-full border-slate-200 p-3 sm:p-4 rounded-xl outline-none focus:border-blue-600 text-sm sm:text-base">
-                <input type="email" placeholder="Email Address" class="w-full border-slate-200 p-3 sm:p-4 rounded-xl outline-none focus:border-blue-600 text-sm sm:text-base">
-                <textarea rows="5" placeholder="Your Message" class="w-full border border-slate-200 p-3 sm:p-4 rounded-xl outline-none focus:border-blue-600 text-sm sm:text-base"></textarea>
-                <button class="bg-blue-600 text-white px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-blue-700 transition w-full sm:w-auto">
-                    Send Message
-                </button>
-            </form>
+        <div class="relative flex sm:justify-end reveal-right">
+          <div class="absolute left-6 sm:left-1/2 w-3 h-3 rounded-full bg-amber-500 -translate-x-1/2 mt-2"></div>
+          <div class="pl-16 sm:pl-14 sm:w-1/2">
+            <span class="font-mono text-xs text-amber-500">STAGE 02</span>
+            <h3 class="font-display font-semibold text-xl mt-2">Design &amp; Approval</h3>
+            <p class="mt-2 text-sm" style="color:var(--text-soft)">Structural drawings and a fixed-scope quote, submitted for permits.</p>
+          </div>
         </div>
-    </section>
-
-    <footer class="bg-slate-900 text-white pt-12 sm:pt-16 pb-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-10">
-
-                <div>
-                    <h3 class="text-xl sm:text-2xl font-bold mb-4">PrimeBuild</h3>
-                    <p class="text-slate-400 text-sm leading-6">
-                        Building quality residential, commercial and industrial projects with integrity and excellence since 2015.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-slate-400 text-sm">
-                        <li><a href="#" class="hover:text-white transition">Home</a></li>
-                        <li><a href="#about" class="hover:text-white transition">About</a></li>
-                        <li><a href="#services" class="hover:text-white transition">Services</a></li>
-                        <li><a href="#projects" class="hover:text-white transition">Projects</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Services</h4>
-                    <ul class="space-y-2 text-slate-400 text-sm">
-                        <li>Residential Construction</li>
-                        <li>Commercial Buildings</li>
-                        <li>Renovation</li>
-                        <li>Architecture Design</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
-                    <ul class="space-y-2 text-slate-400 text-sm">
-                        <li><i class="fas fa-phone mr-2"></i>❤️❤️❤️❤️</li>
-                        <li><i class="fas fa-envelope mr-2"></i> ❤️❤️❤️❤️</li>
-                        <li><i class="fas fa-location-dot mr-2"></i> Lagos, Nigeria</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-slate-800 pt-6 text-center text-slate-500 text-xs sm:text-sm">
-                © 2026 PrimeBuild Construction. All Rights Reserved. | Built with ❤️
-            </div>
+        <div class="relative flex sm:justify-start reveal-left">
+          <div class="absolute left-6 sm:left-1/2 w-3 h-3 rounded-full bg-amber-500 -translate-x-1/2 mt-2"></div>
+          <div class="pl-16 sm:pl-0 sm:w-1/2 sm:pr-14 sm:text-right">
+            <span class="font-mono text-xs text-amber-500">STAGE 03</span>
+            <h3 class="font-display font-semibold text-xl mt-2">Construction</h3>
+            <p class="mt-2 text-sm" style="color:var(--text-soft)">Licensed crews build to spec, with weekly progress reports.</p>
+          </div>
         </div>
-    </footer>
+        <div class="relative flex sm:justify-end reveal-right">
+          <div class="absolute left-6 sm:left-1/2 w-3 h-3 rounded-full bg-amber-500 -translate-x-1/2 mt-2"></div>
+          <div class="pl-16 sm:pl-14 sm:w-1/2">
+            <span class="font-mono text-xs text-amber-500">STAGE 04</span>
+            <h3 class="font-display font-semibold text-xl mt-2">Handover</h3>
+            <p class="mt-2 text-sm" style="color:var(--text-soft)">Final inspection and keys handed over — on the date agreed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
+<section id="projects" class="py-20 sm:py-28" style="background:var(--color-concrete-2);">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 reveal-up">
+      <div>
+        <p class="font-mono text-xs uppercase text-amber-500">— Selected Work</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Recently completed</h2>
+      </div>
+      <div class="flex gap-2 font-mono text-xs uppercase">
+        <button class="filter-btn filter-active px-4 py-2 rounded-full" data-category="all">All</button>
+        <button class="filter-btn px-4 py-2 rounded-full" data-category="residential">Residential</button>
+        <button class="filter-btn px-4 py-2 rounded-full" data-category="commercial">Commercial</button>
+      </div>
+    </div>
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuIcon.classList.toggle('fa-bars');
-            menuIcon.classList.toggle('fa-times');
+    <div class="grid md:grid-cols-3 gap-6 mt-12" id="project-grid">
+
+      <div class="project-card reveal-up card overflow-hidden" data-category="commercial">
+        <div class="zoom-wrap"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=70" loading="lazy" alt="Corporate office complex" class="zoom-img w-full h-56 object-cover"></div>
+        <div class="p-6">
+          <span class="font-mono text-[10px] uppercase text-amber-500">Commercial · Victoria Island</span>
+          <h3 class="font-display font-semibold text-xl mt-2">Corporate Office Complex</h3>
+          <p class="mt-2 text-sm" style="color:var(--text-soft)">14-month build, 6-storey office tower.</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal-up card overflow-hidden" data-category="residential">
+        <div class="zoom-wrap"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=70" loading="lazy" alt="Luxury villa" class="zoom-img w-full h-56 object-cover"></div>
+        <div class="p-6">
+          <span class="font-mono text-[10px] uppercase text-amber-500">Residential · Lekki</span>
+          <h3 class="font-display font-semibold text-xl mt-2">The Harmattan Villa</h3>
+          <p class="mt-2 text-sm" style="color:var(--text-soft)">5-bedroom home, delivered 2 weeks early.</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal-up card overflow-hidden" data-category="commercial">
+        <div class="zoom-wrap"><img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&auto=format&fit=crop&q=70" loading="lazy" alt="Shopping mall" class="zoom-img w-full h-56 object-cover"></div>
+        <div class="p-6">
+          <span class="font-mono text-[10px] uppercase text-amber-500">Commercial · Ikeja</span>
+          <h3 class="font-display font-semibold text-xl mt-2">Ikeja Retail Mall</h3>
+          <p class="mt-2 text-sm" style="color:var(--text-soft)">32,000 sqft, on schedule and on budget.</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal-up card overflow-hidden" data-category="residential">
+        <div class="zoom-wrap"><img src="https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&auto=format&fit=crop&q=70" loading="lazy" alt="Modern apartments" class="zoom-img w-full h-56 object-cover"></div>
+        <div class="p-6">
+          <span class="font-mono text-[10px] uppercase text-amber-500">Residential · Ikoyi</span>
+          <h3 class="font-display font-semibold text-xl mt-2">Ikoyi Court Apartments</h3>
+          <p class="mt-2 text-sm" style="color:var(--text-soft)">12-unit low-rise with private courtyard.</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal-up card overflow-hidden" data-category="commercial">
+        <div class="zoom-wrap"><img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&auto=format&fit=crop&q=70" loading="lazy" alt="Warehouse facility" class="zoom-img w-full h-56 object-cover"></div>
+        <div class="p-6">
+          <span class="font-mono text-[10px] uppercase text-amber-500">Industrial · Apapa</span>
+          <h3 class="font-display font-semibold text-xl mt-2">Apapa Logistics Hub</h3>
+          <p class="mt-2 text-sm" style="color:var(--text-soft)">18,000 sqft warehouse, steel frame.</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal-up card overflow-hidden" data-category="residential">
+        <div class="zoom-wrap"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=70" loading="lazy" alt="Renovated family home" class="zoom-img w-full h-56 object-cover"></div>
+        <div class="p-6">
+          <span class="font-mono text-[10px] uppercase text-amber-500">Renovation · Surulere</span>
+          <h3 class="font-display font-semibold text-xl mt-2">Surulere Family Home</h3>
+          <p class="mt-2 text-sm" style="color:var(--text-soft)">Full structural renovation, modernised throughout.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="py-20 sm:py-28" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto reveal-up">
+      <p class="font-mono text-xs uppercase text-amber-500">— Why PrimeBuild</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Quality, trust and timelines you can plan around</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 mt-14">
+      <div class="card p-8 reveal-up">
+        <i class="fa-solid fa-hard-hat text-3xl text-amber-500"></i>
+        <h3 class="font-display font-semibold text-xl mt-5">Expert Team</h3>
+        <p class="mt-2 text-sm" style="color:var(--text-soft)">Licensed engineers and skilled craftsmen with years on Lagos sites.</p>
+      </div>
+      <div class="card p-8 reveal-up">
+        <i class="fa-solid fa-clock text-3xl text-amber-500"></i>
+        <h3 class="font-display font-semibold text-xl mt-5">On-Time Delivery</h3>
+        <p class="mt-2 text-sm" style="color:var(--text-soft)">98% of our projects hand over on or before the agreed date.</p>
+      </div>
+      <div class="card p-8 reveal-up">
+        <i class="fa-solid fa-shield-halved text-3xl text-amber-500"></i>
+        <h3 class="font-display font-semibold text-xl mt-5">Quality Materials</h3>
+        <p class="mt-2 text-sm" style="color:var(--text-soft)">Sourced and tested materials, backed by a 5-year warranty.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 sm:py-28" style="background:var(--color-concrete-2);">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto reveal-up">
+      <p class="font-mono text-xs uppercase text-amber-500">— Client Voices</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">What it's like to build with us</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 mt-14">
+      <div class="card p-7 reveal-up">
+        <div class="text-amber-500 text-sm mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="text-sm leading-relaxed" style="color:var(--text-soft)">"PrimeBuild delivered our villa two weeks ahead of schedule and the weekly reports meant no surprises."</p>
+        <div class="flex items-center gap-3 mt-6">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-display font-semibold text-sm" style="background:var(--color-ink); color:var(--color-amber-2);">A.O</div>
+          <div><p class="font-semibold text-sm">Adaeze O.</p><p class="text-xs" style="color:var(--text-soft)">Homeowner, Lekki</p></div>
+        </div>
+      </div>
+      <div class="card p-7 reveal-up">
+        <div class="text-amber-500 text-sm mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="text-sm leading-relaxed" style="color:var(--text-soft)">"The fixed-scope contract held from day one to handover. Exactly what we quoted for."</p>
+        <div class="flex items-center gap-3 mt-6">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-display font-semibold text-sm" style="background:var(--color-ink); color:var(--color-amber-2);">T.B</div>
+          <div><p class="font-semibold text-sm">Tunde B.</p><p class="text-xs" style="color:var(--text-soft)">Developer, Ikeja Mall</p></div>
+        </div>
+      </div>
+      <div class="card p-7 reveal-up">
+        <div class="text-amber-500 text-sm mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="text-sm leading-relaxed" style="color:var(--text-soft)">"Our warehouse needed a fast, reinforced build. PrimeBuild's engineers got the load specs exactly right."</p>
+        <div class="flex items-center gap-3 mt-6">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-display font-semibold text-sm" style="background:var(--color-ink); color:var(--color-amber-2);">K.N</div>
+          <div><p class="font-semibold text-sm">Kelechi N.</p><p class="text-xs" style="color:var(--text-soft)">Ops Director, Apapa</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="py-20 sm:py-28" style="background:var(--bg);">
+  <div class="max-w-3xl mx-auto px-5 sm:px-8">
+    <div class="text-center reveal-up">
+      <p class="font-mono text-xs uppercase text-amber-500">— Questions</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Frequently asked</h2>
+    </div>
+
+    <div class="mt-12 reveal-up">
+      <details class="faq-item py-5" open>
+        <summary class="flex items-center justify-between font-display font-semibold text-lg">
+          How long does a typical build take?
+          <i class="fa-solid fa-chevron-down faq-icon text-amber-500 text-sm"></i>
+        </summary>
+        <div class="faq-answer pt-3 text-sm" style="color:var(--text-soft)">A standard 4-bedroom home runs 6–9 months from groundbreaking.</div>
+      </details>
+      <details class="faq-item py-5">
+        <summary class="flex items-center justify-between font-display font-semibold text-lg">
+          Do you handle permits and approvals?
+          <i class="fa-solid fa-chevron-down faq-icon text-amber-500 text-sm"></i>
+        </summary>
+        <div class="faq-answer pt-3 text-sm" style="color:var(--text-soft)">Yes — our in-house architecture team submits all drawings for approval.</div>
+      </details>
+      <details class="faq-item py-5">
+        <summary class="flex items-center justify-between font-display font-semibold text-lg">
+          Is the quoted price fixed?
+          <i class="fa-solid fa-chevron-down faq-icon text-amber-500 text-sm"></i>
+        </summary>
+        <div class="faq-answer pt-3 text-sm" style="color:var(--text-soft)">Yes. Once you sign off on the scope, the price is fixed.</div>
+      </details>
+      <details class="faq-item py-5">
+        <summary class="flex items-center justify-between font-display font-semibold text-lg">
+          What warranty do you offer?
+          <i class="fa-solid fa-chevron-down faq-icon text-amber-500 text-sm"></i>
+        </summary>
+        <div class="faq-answer pt-3 text-sm" style="color:var(--text-soft)">Every build carries a 5-year structural warranty.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="relative overflow-hidden gradient-animated text-white py-20 sm:py-24">
+  <div class="absolute inset-0 blueprint-grid-dark opacity-50"></div>
+  <div class="glow-blob w-80 h-80 bg-amber-400/25 -bottom-20 left-1/4"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8 text-center reveal-scale">
+    <h2 class="font-display font-bold text-3xl sm:text-4xl">Ready to break ground?</h2>
+    <p class="mt-4 text-slate-300 text-base sm:text-lg max-w-xl mx-auto">Tell us about your site and we'll reply with a scoped timeline within 48 hours.</p>
+    <a href="#contact" class="btn btn-amber mt-8 inline-flex px-8 py-4 rounded-full font-semibold">Get A Free Quote <i class="fa-solid fa-arrow-right text-sm"></i></a>
+
+    <form class="mt-14 pt-10 border-t max-w-md mx-auto flex flex-col sm:flex-row gap-3" style="border-color:rgba(255,255,255,0.15);" onsubmit="return false;">
+      <label for="newsletter-email" class="sr-only">Email address</label>
+      <input id="newsletter-email" type="email" required placeholder="Email for build updates" class="flex-1 px-4 py-3 rounded-full text-sm text-slate-900">
+      <button type="submit" class="btn btn-primary px-6 py-3 rounded-full font-semibold text-sm whitespace-nowrap">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<section id="contact" class="py-20 sm:py-28" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="grid lg:grid-cols-2 gap-14">
+
+      <div class="reveal-left">
+        <p class="font-mono text-xs uppercase text-amber-500">— Get In Touch</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl mt-4">Tell us about your project</h2>
+        <p class="mt-4 text-sm" style="color:var(--text-soft)">Fill in the form or reach us directly.</p>
+
+        <div class="mt-10 space-y-5">
+          <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-phone text-amber-500"></i></div><span class="text-sm font-medium">+234 800 000 0000</span></div>
+          <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-envelope text-amber-500"></i></div><span class="text-sm font-medium">hello@primebuild.ng</span></div>
+          <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-full flex items-center justify-center" style="background:rgba(232,163,61,0.15)"><i class="fa-solid fa-location-dot text-amber-500"></i></div><span class="text-sm font-medium">Victoria Island, Lagos, Nigeria</span></div>
+        </div>
+      </div>
+
+      <form class="card p-8 reveal-right space-y-5" onsubmit="return false;">
+        <div>
+          <label for="contact-name" class="text-xs font-mono uppercase" style="color:var(--color-steel-2)">Your Name</label>
+          <input id="contact-name" type="text" required class="w-full mt-2 p-3.5 rounded-xl border text-sm" style="border-color:var(--color-border); background:var(--bg-surface);">
+        </div>
+        <div>
+          <label for="contact-email" class="text-xs font-mono uppercase" style="color:var(--color-steel-2)">Email Address</label>
+          <input id="contact-email" type="email" required class="w-full mt-2 p-3.5 rounded-xl border text-sm" style="border-color:var(--color-border); background:var(--bg-surface);">
+        </div>
+        <div>
+          <label for="contact-message" class="text-xs font-mono uppercase" style="color:var(--color-steel-2)">Your Project</label>
+          <textarea id="contact-message" rows="4" required class="w-full mt-2 p-3.5 rounded-xl border text-sm" style="border-color:var(--color-border); background:var(--bg-surface);"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-full py-4 rounded-xl font-semibold">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pt-16 pb-8 text-slate-300" style="background:var(--color-ink);">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div>
+        <div class="font-display font-bold text-xl text-white mb-4 flex items-center gap-2">
+          <svg width="22" height="22" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="2" y="16" width="6" height="12" fill="currentColor"/><rect x="12" y="9" width="6" height="19" fill="var(--color-amber)"/><rect x="22" y="2" width="6" height="26" fill="currentColor"/></svg>
+          PrimeBuild
+        </div>
+        <p class="text-sm leading-6">Building quality residential, commercial and industrial projects across Lagos since 2015.</p>
+        <div class="flex gap-3 mt-5">
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center"><i class="fa-brands fa-instagram text-sm"></i></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-white mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#projects">Projects</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-white mb-4">Services</h4>
+        <ul class="space-y-2 text-sm">
+          <li>Residential Construction</li>
+          <li>Commercial Buildings</li>
+          <li>Renovation</li>
+          <li>Architecture Design</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-white mb-4">Contact</h4>
+        <ul class="space-y-2 text-sm">
+          <li><i class="fa-solid fa-phone mr-2 text-amber-400"></i>+234 800 000 0000</li>
+          <li><i class="fa-solid fa-envelope mr-2 text-amber-400"></i>hello@primebuild.ng</li>
+          <li><i class="fa-solid fa-location-dot mr-2 text-amber-400"></i>Victoria Island, Lagos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 text-center text-xs text-slate-400">
+      © 2026 PrimeBuild Construction. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<a href="#contact" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full btn btn-amber shadow-lg flex items-center justify-center" aria-label="Jump to contact form">
+  <i class="fa-solid fa-message text-lg"></i>
+</a>
+
+<script>
+
+  function hidePageLoader() {
+    window.addEventListener('load', function () {
+      var loader = document.getElementById('page-loader');
+      setTimeout(function () {
+        loader.classList.add('loader-hidden');
+      }, 300);
+    });
+  }
+
+  function setupMobileMenu() {
+    var menuButton = document.getElementById('mobile-menu-btn');
+    var menu = document.getElementById('mobile-menu');
+    var icon = document.getElementById('mobile-menu-icon');
+
+    menuButton.addEventListener('click', function () {
+      var isNowHidden = menu.classList.toggle('hidden');
+      menuButton.setAttribute('aria-expanded', String(!isNowHidden));
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    var mobileLinks = document.querySelectorAll('#mobile-menu a');
+    mobileLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.add('hidden');
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+      });
+    });
+  }
+
+  function setDarkMode(isDark) {
+    var htmlTag = document.documentElement;
+    var icon = document.getElementById('dark-mode-icon');
+
+    htmlTag.classList.toggle('dark', isDark);
+    icon.classList.toggle('fa-moon', !isDark);
+    icon.classList.toggle('fa-sun', isDark);
+
+    localStorage.setItem('primebuild-theme', isDark ? 'dark' : 'light');
+  }
+
+  function setupDarkMode() {
+    var savedTheme = localStorage.getItem('primebuild-theme');
+    if (savedTheme === 'dark') {
+      setDarkMode(true);
+    }
+
+    var darkModeButton = document.getElementById('dark-mode-btn');
+    darkModeButton.addEventListener('click', function () {
+      var isCurrentlyDark = document.documentElement.classList.contains('dark');
+      setDarkMode(!isCurrentlyDark);
+    });
+  }
+
+  function setupStickyNav() {
+    var navBar = document.getElementById('site-nav');
+    var navInner = document.getElementById('nav-inner');
+
+    function updateNavOnScroll() {
+      if (window.scrollY > 40) {
+        navBar.style.backgroundColor = 'var(--bg-surface)';
+        navInner.style.borderBottomColor = 'var(--color-border)';
+      } else {
+        navBar.style.backgroundColor = 'transparent';
+        navInner.style.borderBottomColor = 'transparent';
+      }
+    }
+
+    window.addEventListener('scroll', updateNavOnScroll);
+    updateNavOnScroll(); // run once immediately in case page loads mid-scroll
+  }
+
+  function setupScrollSpy() {
+    var sections = document.querySelectorAll('main section[id]');
+    var navLinks = document.querySelectorAll('.nav-link');
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var sectionId = entry.target.getAttribute('id');
+
+          navLinks.forEach(function (link) {
+            var isMatch = link.getAttribute('href') === '#' + sectionId;
+            link.classList.toggle('active-link', isMatch);
+          });
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+
+    sections.forEach(function (section) {
+      observer.observe(section);
+    });
+  }
+
+  function setupScrollReveal() {
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var revealElements = document.querySelectorAll(
+      '.reveal-up, .reveal-left, .reveal-right, .reveal-scale'
+    );
+
+    if (prefersReducedMotion) {
+      revealElements.forEach(function (el) {
+        el.classList.add('in-view');
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target); // only animate once
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealElements.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
+  function setupTimelineFill() {
+    var timelineLine = document.getElementById('js-timeline-line');
+    if (!timelineLine) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          timelineLine.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(timelineLine);
+  }
+
+  function animateCounter(element) {
+    var target = parseInt(element.getAttribute('data-target'), 10);
+    var suffix = element.getAttribute('data-suffix') || '';
+    var durationMs = 1600;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (startTime === null) startTime = timestamp;
+
+      var elapsed = timestamp - startTime;
+      var progress = Math.min(elapsed / durationMs, 1);
+
+      var easedProgress = 1 - Math.pow(1 - progress, 3);
+      var currentValue = Math.floor(easedProgress * target);
+
+      element.textContent = currentValue + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        element.textContent = target + suffix; // make sure it ends exactly on target
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  function setupCounters() {
+    var counters = document.querySelectorAll('.js-counter');
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target); // only run once
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
+  function createRipple(event) {
+    var button = event.currentTarget;
+    var rect = button.getBoundingClientRect();
+    var size = Math.max(rect.width, rect.height);
+
+    var ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.width = size + 'px';
+    ripple.style.height = size + 'px';
+    ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+
+    button.appendChild(ripple);
+
+    setTimeout(function () {
+      ripple.remove();
+    }, 600);
+  }
+
+  function setupButtonRipples() {
+    var buttons = document.querySelectorAll('.btn');
+    buttons.forEach(function (button) {
+      button.addEventListener('click', createRipple);
+    });
+  }
+
+  function setupProjectFilters() {
+    var filterButtons = document.querySelectorAll('.filter-btn');
+    var projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        filterButtons.forEach(function (b) {
+          b.classList.remove('filter-active');
         });
+        button.classList.add('filter-active');
 
+        var selectedCategory = button.getAttribute('data-category');
 
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                menuIcon.classList.add('fa-bars');
-                menuIcon.classList.remove('fa-times');
-            });
+        projectCards.forEach(function (card) {
+          var cardCategory = card.getAttribute('data-category');
+          var shouldShow = selectedCategory === 'all' || cardCategory === selectedCategory;
+          card.style.display = shouldShow ? '' : 'none';
         });
-    </script>
+      });
+    });
+  }
+
+  function setupFaqAccordion() {
+    var faqItems = document.querySelectorAll('details.faq-item');
+
+    faqItems.forEach(function (item) {
+      item.addEventListener('toggle', function () {
+        if (item.open) {
+          faqItems.forEach(function (otherItem) {
+            if (otherItem !== item) {
+              otherItem.open = false;
+            }
+          });
+        }
+      });
+    });
+  }
+
+  function initAll() {
+    hidePageLoader();
+    setupMobileMenu();
+    setupDarkMode();
+    setupStickyNav();
+    setupScrollSpy();
+    setupScrollReveal();
+    setupTimelineFill();
+    setupCounters();
+    setupButtonRipples();
+    setupProjectFilters();
+    setupFaqAccordion();
+  }
+
+  document.addEventListener('DOMContentLoaded', initAll);
+
+</script>
+
 </body>
 </html>
